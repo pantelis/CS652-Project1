@@ -6,16 +6,27 @@ Both Google and Facebook found themseves in a position where an ever-expanding d
 
 Derivations of the fat tree topology are the name of the game, with each company taking a slightly different approach to designing the network. The goal of both networks is a multi-petabit bisection bandwidth, with each host/server receing a 10G uplink to the fabric and 40G links being used between switches. 
 
+Equal-cost multipath routing (ECMP) w/ hashing is used at both companies to ensure load balancing and redundancy.
+
 | Company  | Hierarchy | 
 |---|---|
 | Google (Jupiter)  | Server -> ToR -> Middle Block/Aggregation Block -> Spine Block  |  
 | Facebook | Server -> ToR -> Server Pod -> Spine Plane  |  
 
+
+### Google
+
 Google's approach involves taking 32 ToR switches and assigning each 2x10G links to 8 so-called "Middle Blocks". These 8 MBs (grouped into an "Aggregation Block") are each supported by 4 switches. The ABs will uplink via 512x40G links to 256 Spine Blocks, each SB supporting up to 64 ABs with 128x40G total downlinks. 
+
+![image](images/Google-Topology.png)
+
+### Facebook
 
 Facebook's approach involves breaking up the network into "server pods" and "spine planes". A server pod is comprised of up to 48 ToR switches and 4 fabric switches. Each of the 4 fabric switches in a server pod is a part of one of 4 spine planes. Each spine plane is suppored by 48 spine switches that link to the edge. 
 
-Equal-cost multipath routing (ECMP) w/ hashing is used at both companies to ensure load balancing and redundancy.
+![image](https://engineering.fb.com/wp-content/uploads/2014/11/GNbKowDUKNqKwcECAEXsXkcAAAAAbj0JAAAB.jpg)
+
+
  
 ## Deploying Hardware
 
